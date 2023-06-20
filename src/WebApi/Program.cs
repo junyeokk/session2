@@ -1,3 +1,6 @@
+// add a namespace for rewriteoptions
+using Microsoft.AspNetCore.Rewrite;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -14,6 +17,10 @@ if (app.Environment.IsDevelopment())
 {
     app.UseSwagger();
     app.UseSwaggerUI();
+    // add a new rewrite option that redirects root to /swagger
+    var option = new RewriteOptions();
+    option.AddRedirect("^$", "swagger");
+    app.UseRewriter(option);
 }
 
 app.UseHttpsRedirection();
